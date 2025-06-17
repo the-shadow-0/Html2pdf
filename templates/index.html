@@ -1,0 +1,142 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Convert HTML files or code to PDF or PNG images easily.">
+    <meta name="keywords" content="HTML, PDF, Image, Converter, Ace Editor">
+    <meta name="author" content="Noureddine BENMANSER (the-shadow-0)">
+    <title>HTML to PDF/Image Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/heroicons@2.0.13/dist/outline.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js"></script>
+</head>
+
+<body class="flex items-center justify-center h-full p-4">
+    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <header class="relative overflow-hidden h-48 bg-gradient-to-tr from-indigo-600 to-blue-500">
+            <div
+                class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds.png')] opacity-10">
+            </div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full text-white px-6">
+                <h1 class="text-4xl font-extrabold drop-shadow">HTML Converter</h1>
+                <p class="mt-2 text-lg opacity-90">Seamlessly turn HTML into PDF or high‑res images</p>
+            </div>
+        </header>
+
+        <nav class="flex bg-white border-b border-gray-200">
+            <button id="tab-file" class="flex-1 py-4 text-center font-medium text-gray-700 hover:bg-gray-50 transition
+                         active:border-b-4 active:border-indigo-500" aria-selected="true">
+                <iconify-icon icon="heroicons-outline:upload" class="inline-block w-5 h-5 mr-1"></iconify-icon>
+                Upload
+            </button>
+            <button id="tab-code" class="flex-1 py-4 text-center font-medium text-gray-700 hover:bg-gray-50 transition"
+                aria-selected="false">
+                <iconify-icon icon="heroicons-outline:code" class="inline-block w-5 h-5 mr-1"></iconify-icon>
+                Editor
+            </button>
+        </nav>
+
+        <main class="p-8 space-y-8">
+            <section id="panel-file">
+                <form id="form-file" class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Select HTML File</label>
+                        <input type="file" name="file" accept=".html" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-400 focus:border-indigo-400 transition" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Output Type</label>
+                        <select name="format"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-400 focus:border-indigo-400 transition">
+                            <option value="pdf">PDF</option>
+                            <option value="image">PNG Image</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="sm:col-span-3 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold
+                             hover:bg-indigo-700 transition flex items-center justify-center">
+                        <iconify-icon icon="heroicons-outline:document-arrow-down" class="w-5 h-5 mr-2"></iconify-icon>
+                        Convert
+                    </button>
+                </form>
+            </section>
+
+            <section id="panel-code" class="hidden">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Enter HTML</label>
+                    <div id="editor" class="h-60 bg-gray-50 rounded-lg border border-gray-200 shadow-inner"></div>
+                </div>
+                <form id="form-code" class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                    <textarea name="html_code" id="html_code" hidden></textarea>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Output Type</label>
+                        <select name="format"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-400 focus:border-blue-400 transition">
+                            <option value="pdf">PDF</option>
+                            <option value="image">PNG Image</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="sm:col-span-3 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold
+                             hover:bg-blue-700 transition flex items-center justify-center">
+                        <iconify-icon icon="heroicons-outline:arrow-path" class="w-5 h-5 mr-2"></iconify-icon>
+                        Run & Download
+                    </button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+
+    <script>
+        const tabFile = document.getElementById('tab-file');
+        const tabCode = document.getElementById('tab-code');
+        const panelFile = document.getElementById('panel-file');
+        const panelCode = document.getElementById('panel-code');
+        function showFile() {
+            panelFile.classList.remove('hidden'); panelCode.classList.add('hidden');
+            tabFile.setAttribute('aria-selected', 'true'); tabCode.setAttribute('aria-selected', 'false');
+            tabFile.classList.add('active:border-b-4'); tabCode.classList.remove('active:border-b-4');
+        }
+        function showCode() {
+            panelCode.classList.remove('hidden'); panelFile.classList.add('hidden');
+            tabCode.setAttribute('aria-selected', 'true'); tabFile.setAttribute('aria-selected', 'false');
+            tabCode.classList.add('active:border-b-4'); tabFile.classList.remove('active:border-b-4');
+        }
+        tabFile.addEventListener('click', showFile);
+        tabCode.addEventListener('click', showCode);
+
+        const editor = ace.edit("editor", {
+            theme: "ace/theme/dracula",
+            mode: "ace/mode/html",
+            fontSize: 14,
+            wrap: true
+        });
+
+        function downloadBlob(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = blob.type === 'application/pdf' ? 'output.pdf' : 'output.png';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('form-file').onsubmit = async e => {
+            e.preventDefault();
+            const res = await fetch('/convert_file', { method: 'POST', body: new FormData(e.target) });
+            if (!res.ok) return alert('Error: ' + res.statusText);
+            downloadBlob(await res.blob());
+        };
+        document.getElementById('form-code').onsubmit = async e => {
+            e.preventDefault();
+            document.getElementById('html_code').value = editor.getValue();
+            const res = await fetch('/convert_code', { method: 'POST', body: new FormData(e.target) });
+            if (!res.ok) return alert('Error: ' + res.statusText);
+            downloadBlob(await res.blob());
+        };
+    </script>
+</body>
+
+</html>
