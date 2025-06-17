@@ -16,17 +16,17 @@ The UI is styled with Tailwind CSS, enhanced by gradients, shadows, and icons 
 
    Two conversion modes
 
-        File Upload: Choose an existing .html file
+   File Upload: Choose an existing .html file
 
-        Code Editor: Write or paste HTML directly in the browser
+   Code Editor: Write or paste HTML directly in the browser
 
-    High‑res rendering using Pyppeteer (headless Chromium)
+   High‑res rendering using Pyppeteer (headless Chromium)
 
-    Single‑page PDF or full‑page PNG output at 2× device‑pixel ratio
+   Single‑page PDF or full‑page PNG output at 2× device‑pixel ratio
 
-    Responsive, modern UI with Tailwind CSS & Heroicons
+   Responsive, modern UI with Tailwind CSS & Heroicons
 
-    Zero‑JavaScript frameworks—just vanilla JS for form handling
+   Zero‑JavaScript frameworks—just vanilla JS for form handling
 
 ## 📂 Project Structure
 
