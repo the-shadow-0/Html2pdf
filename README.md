@@ -28,16 +28,6 @@ The UI is styled with Tailwind CSS, enhanced by gradients, shadows, and icons 
 
    Zero‑JavaScript frameworks—just vanilla JS for form handling
 
-## 📂 Project Structure
-
-.
-├── main.py                # FastAPI application
-├── requirements.txt       # Python dependencies
-├── uploads/               # Temporary storage for uploaded/html files
-├── templates/
-    └── index.html         # Jinja2 template with Tailwind & Ace Editor
-
-
 ## 🔧 Installation
 
   Clone the repo
@@ -87,17 +77,6 @@ Navigate to http://localhost:8000 in your browser. You’ll see the converter UI
 
         Click Run & Download.
 
-## ⚙️ Configuration
-
-    Device Scale Factor
-    Adjust the DPI/resolution in render_highres_png() by changing scale (default: 2).
-
-    Output Margins
-    Modify img2pdf.convert(..., dpi=96) or Puppeteer’s PDF options in main.py.
-
-    Styling
-    Tailwind CSS is loaded via CDN—customize the theme in the <script src="https://cdn.tailwindcss.com"></script> block.
-
 ## 📦 Dependencies
 
     FastAPI & Uvicorn for the web server
@@ -115,6 +94,7 @@ Navigate to http://localhost:8000 in your browser. You’ll see the converter UI
     Heroicons (via iconify-icon) for UI icons
 
 See requirements.txt for exact versions.
+
 ## 🙌 Contributing
 
     Fork the repository
