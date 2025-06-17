@@ -1,0 +1,6 @@
+fastapi>=0.95.0
+uvicorn[standard]>=0.23.0
+jinja2>=3.1.0
+pyppeteer>=1.0.2
+img2pdf>=0.4.0
+python-multipart>=0.0.6
