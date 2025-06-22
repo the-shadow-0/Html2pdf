@@ -14,7 +14,7 @@
 
    Download the result instantly, with pixel‑perfect fidelity
 
-The UI is styled with Tailwind CSS, enhanced by gradients, shadows, and icons from Heroicons, and features the Ace Editor for a smooth coding experience.
+The UI is styled with Tailwind CSS, enhanced by gradients, shadows, and icons from Heroicons, and features the Ace Editor for a smooth coding experience. 
 
 ## 🚀 Features
 
